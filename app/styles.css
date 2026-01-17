@@ -454,6 +454,142 @@ body {
     width: 100%;
 }
 
+/* ===== Clickable Cards ===== */
+.stat-card.clickable {
+    cursor: pointer;
+}
+
+.stat-card.clickable::after {
+    content: '→';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+    color: var(--gray-400);
+    transition: all 0.3s ease;
+}
+
+.stat-card.clickable:hover::after {
+    right: 0.75rem;
+    color: var(--secondary-color);
+}
+
+.stat-card {
+    position: relative;
+}
+
+/* ===== Page Header ===== */
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-header h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 0.25rem;
+}
+
+.page-header p {
+    color: var(--gray-500);
+}
+
+/* ===== Back Button ===== */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    color: var(--primary-dark);
+}
+
+.back-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ===== Data Table ===== */
+.table-container {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table thead {
+    background: var(--gradient-primary);
+}
+
+.data-table th {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    color: white;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.data-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--gray-200);
+    color: var(--dark-color);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+    background: var(--gray-100);
+}
+
+.course-code {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(79, 70, 229, 0.2));
+    color: var(--primary-color);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.semester-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.2));
+    color: var(--success-color);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.loading-row,
+.empty-row,
+.error-row {
+    text-align: center;
+    color: var(--gray-500);
+    font-style: italic;
+}
+
+.error-row {
+    color: var(--danger-color);
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
     .dashboard-header {
@@ -481,5 +617,15 @@ body {
 
     .chart-container {
         height: 250px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
     }
 }
