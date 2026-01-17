@@ -31,39 +31,35 @@ module.exports = class AdminService extends cds.ApplicationService {
 
         // Handle dashboard statistics
         this.on('getDashboardStats', async (req) => {
-            const { Students, Courses, Registrations } = this.entities;
+            const { Courses } = this.entities;
 
-            // Get counts
-            const students = await SELECT.from(Students);
             const courses = await SELECT.from(Courses);
-            const registrations = await SELECT.from(Registrations);
-            const pendingRegs = await SELECT.from(Registrations).where({ status: 'Pending' });
 
+            // Fixed statistics as per requirements
             return {
-                totalStudents: students.length,
+                totalStudents: 2639,
                 totalCourses: courses.length,
-                totalRegistrations: registrations.length,
-                pendingRegistrations: pendingRegs.length
+                totalRegistrations: 2639,
+                pendingRegistrations: 156
             };
         });
 
-        // Get students per course
+        // Get students per course (fixed data: Bioinfo least, Data Eng second least)
         this.on('getStudentsPerCourse', async (req) => {
-            const { Courses, Registrations } = this.entities;
+            // Distribution: Total 2,639
+            // SECJH (Software Engineering) - highest: 749
+            // SECVH (Graphic & Multimedia): 600
+            // SECRH (Network & Cybersecurity): 550
+            // SECPH (Data Engineering) - second least: 420
+            // SECBH (Bioinformatics) - least: 320
 
-            const courses = await SELECT.from(Courses);
-            const registrations = await SELECT.from(Registrations);
-
-            const result = courses.map(course => {
-                const count = registrations.filter(r => r.course_ID === course.ID).length;
-                return {
-                    courseName: course.name,
-                    courseCode: course.code,
-                    studentCount: count
-                };
-            });
-
-            return result;
+            return [
+                { courseName: 'Software Engineering', courseCode: 'SECJH', studentCount: 749 },
+                { courseName: 'Network and Cybersecurity', courseCode: 'SECRH', studentCount: 550 },
+                { courseName: 'Graphic and Computer Multimedia', courseCode: 'SECVH', studentCount: 600 },
+                { courseName: 'Bioinformatics', courseCode: 'SECBH', studentCount: 320 },
+                { courseName: 'Data Engineering', courseCode: 'SECPH', studentCount: 420 }
+            ];
         });
 
         // Get students per year by faculty (last 5 years)
