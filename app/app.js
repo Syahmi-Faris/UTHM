@@ -148,10 +148,8 @@ async function loadChartData() {
         const courseData = await courseResponse.json();
         renderStudentsPerCourseChart(courseData.value || courseData);
 
-        // Load students per year data
-        const yearResponse = await fetch(`${API_BASE}/getStudentsPerYear()`);
-        const yearData = await yearResponse.json();
-        renderStudentsPerYearChart(yearData.value || yearData);
+        // Load enrollment trend data (default: 5 years)
+        await loadEnrollmentTrend(5);
 
         // Load registration status data
         const regResponse = await fetch(`${API_BASE}/getRegistrationStatus()`);
@@ -161,6 +159,33 @@ async function loadChartData() {
     } catch (error) {
         console.error('Error loading chart data:', error);
     }
+}
+
+// ===== Load Enrollment Trend Data =====
+let enrollmentChart = null;
+
+async function loadEnrollmentTrend(yearsBack) {
+    try {
+        const response = await fetch(`${API_BASE}/getEnrollmentTrend(yearsBack=${yearsBack})`);
+        const data = await response.json();
+        renderEnrollmentTrendChart(data.value || data);
+    } catch (error) {
+        console.error('Error loading enrollment trend:', error);
+    }
+}
+
+// ===== Toggle Enrollment Chart (5yr / 10yr) =====
+function toggleEnrollmentChart(years) {
+    // Update active button
+    document.querySelectorAll('.chart-toggle .toggle-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (parseInt(btn.dataset.years) === years) {
+            btn.classList.add('active');
+        }
+    });
+
+    // Reload chart with new data
+    loadEnrollmentTrend(years);
 }
 
 // ===== Render Students per Course Chart (Bar Chart) =====
@@ -237,61 +262,37 @@ function renderStudentsPerCourseChart(data) {
     });
 }
 
-// ===== Render Students per Year Chart (Line Chart) =====
-function renderStudentsPerYearChart(data) {
-    const ctx = document.getElementById('studentsPerYearChart');
+// ===== Render Enrollment Trend Chart (Faculty of Computing) =====
+function renderEnrollmentTrendChart(data) {
+    const ctx = document.getElementById('enrollmentTrendChart');
     if (!ctx) return;
 
-    const labels = data.map(item => item.year.toString());
+    // Destroy existing chart if it exists
+    if (enrollmentChart) {
+        enrollmentChart.destroy();
+    }
 
-    new Chart(ctx, {
+    const labels = data.map(item => item.year.toString());
+    const values = data.map(item => item.studentCount);
+
+    enrollmentChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
             datasets: [
                 {
-                    label: 'Computing',
-                    data: data.map(item => item.facultyComputing),
+                    label: 'Students',
+                    data: values,
                     borderColor: 'rgba(79, 70, 229, 1)',
-                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    backgroundColor: 'rgba(79, 70, 229, 0.15)',
                     fill: true,
                     tension: 0.4,
                     pointBackgroundColor: 'rgba(79, 70, 229, 1)',
-                    pointRadius: 5,
-                    pointHoverRadius: 7
-                },
-                {
-                    label: 'Electrical',
-                    data: data.map(item => item.facultyElectrical),
-                    borderColor: 'rgba(14, 165, 233, 1)',
-                    backgroundColor: 'rgba(14, 165, 233, 0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: 'rgba(14, 165, 233, 1)',
-                    pointRadius: 5,
-                    pointHoverRadius: 7
-                },
-                {
-                    label: 'Mechanical',
-                    data: data.map(item => item.facultyMechanical),
-                    borderColor: 'rgba(16, 185, 129, 1)',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: 'rgba(16, 185, 129, 1)',
-                    pointRadius: 5,
-                    pointHoverRadius: 7
-                },
-                {
-                    label: 'Civil',
-                    data: data.map(item => item.facultyCivil),
-                    borderColor: 'rgba(245, 158, 11, 1)',
-                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: 'rgba(245, 158, 11, 1)',
-                    pointRadius: 5,
-                    pointHoverRadius: 7
+                    pointBorderColor: 'white',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    borderWidth: 3
                 }
             ]
         },
@@ -300,12 +301,7 @@ function renderStudentsPerYearChart(data) {
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    position: 'bottom',
-                    labels: {
-                        usePointStyle: true,
-                        padding: 20,
-                        color: '#475569'
-                    }
+                    display: false
                 },
                 tooltip: {
                     backgroundColor: 'rgba(30, 41, 59, 0.9)',
@@ -313,16 +309,22 @@ function renderStudentsPerYearChart(data) {
                     bodyColor: '#fff',
                     padding: 12,
                     cornerRadius: 8,
-                    mode: 'index',
-                    intersect: false
+                    displayColors: false,
+                    callbacks: {
+                        label: function (context) {
+                            return `Students: ${context.parsed.y.toLocaleString()}`;
+                        }
+                    }
                 }
             },
             scales: {
                 y: {
-                    beginAtZero: true,
+                    beginAtZero: false,
                     ticks: {
-                        stepSize: 1,
-                        color: '#64748b'
+                        color: '#64748b',
+                        callback: function (value) {
+                            return value.toLocaleString();
+                        }
                     },
                     grid: {
                         color: 'rgba(203, 213, 225, 0.3)'

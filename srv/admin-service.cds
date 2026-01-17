@@ -30,13 +30,10 @@ service AdminService @(path: '/api/admin') {
         studentCount: Integer;
     };
     
-    // Chart data: Students per year by faculty
-    function getStudentsPerYear() returns array of {
+    // Chart data: Faculty of Computing enrollment trends
+    function getEnrollmentTrend(yearsBack: Integer) returns array of {
         year: Integer;
-        facultyComputing: Integer;
-        facultyElectrical: Integer;
-        facultyMechanical: Integer;
-        facultyCivil: Integer;
+        studentCount: Integer;
     };
     
     // Chart data: Registration status per course
