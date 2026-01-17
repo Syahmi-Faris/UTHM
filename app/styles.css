@@ -638,6 +638,116 @@ body {
     color: var(--danger-color);
 }
 
+/* ===== Pending Summary Section ===== */
+.pending-summary {
+    margin-bottom: 2rem;
+}
+
+.pending-summary h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.summary-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-md);
+    border-left: 4px solid var(--warning-color);
+    transition: all 0.3s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.summary-count {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--warning-color);
+    margin-bottom: 0.5rem;
+}
+
+.summary-course {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.summary-course .course-code {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+}
+
+.summary-course .course-name {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+}
+
+/* ===== Table Title ===== */
+.table-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--gray-200);
+    margin: 0;
+}
+
+/* ===== Student ID Badge ===== */
+.student-id {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(14, 165, 233, 0.2));
+    color: var(--secondary-color);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.8rem;
+    font-family: monospace;
+}
+
+/* ===== Date Badge ===== */
+.date-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.2));
+    color: var(--warning-color);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+/* ===== Course Name Small ===== */
+.course-name-small {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    margin-top: 0.25rem;
+}
+
+/* ===== Loading / Error Text ===== */
+.loading-text,
+.error-text,
+.empty-text {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray-500);
+    font-style: italic;
+}
+
+.error-text {
+    color: var(--danger-color);
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
     .dashboard-header {
@@ -675,5 +785,9 @@ body {
     .data-table td {
         padding: 0.75rem 1rem;
         font-size: 0.875rem;
+    }
+
+    .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
     }
 }

@@ -102,6 +102,39 @@ module.exports = class AdminService extends cds.ApplicationService {
             ];
         });
 
+        // Get pending registrations (summary by course + detailed list)
+        this.on('getPendingRegistrations', async (req) => {
+            // Summary: 156 total pending registrations by course
+            const summary = [
+                { courseCode: 'SECJH', courseName: 'Software Engineering', pendingCount: 45 },
+                { courseCode: 'SECRH', courseName: 'Network and Cybersecurity', pendingCount: 32 },
+                { courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', pendingCount: 38 },
+                { courseCode: 'SECBH', courseName: 'Bioinformatics', pendingCount: 18 },
+                { courseCode: 'SECPH', courseName: 'Data Engineering', pendingCount: 23 }
+            ];
+
+            // Sample pending registrations (showing 15 for demo)
+            const registrations = [
+                { studentId: 'A22EC0156', studentName: 'Ahmad bin Ali', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-15' },
+                { studentId: 'A22EC0234', studentName: 'Siti Aminah binti Hassan', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-15' },
+                { studentId: 'A22EC0189', studentName: 'Muhammad Hafiz bin Ismail', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-14' },
+                { studentId: 'A22EC0312', studentName: 'Nurul Aisyah binti Razak', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-14' },
+                { studentId: 'A22EC0098', studentName: 'Mohd Farhan bin Yusof', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-14' },
+                { studentId: 'A22EC0445', studentName: 'Fatimah binti Abdullah', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-13' },
+                { studentId: 'A22EC0267', studentName: 'Amir Hamzah bin Kamal', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-13' },
+                { studentId: 'A22EC0178', studentName: 'Nur Hidayah binti Osman', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-13' },
+                { studentId: 'A22EC0523', studentName: 'Khairul Anwar bin Samad', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-12' },
+                { studentId: 'A22EC0334', studentName: 'Aina Sofea binti Zainal', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-12' },
+                { studentId: 'A22EC0412', studentName: 'Irfan bin Mohd Noor', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-12' },
+                { studentId: 'A22EC0289', studentName: 'Sarina binti Hashim', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-11' },
+                { studentId: 'A22EC0156', studentName: 'Danish Hakim bin Aziz', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-11' },
+                { studentId: 'A22EC0378', studentName: 'Nur Atiqah binti Rahman', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-10' },
+                { studentId: 'A22EC0201', studentName: 'Haziq bin Jaafar', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-10' }
+            ];
+
+            return { summary, registrations };
+        });
+
         await super.init();
     }
 };

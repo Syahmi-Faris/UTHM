@@ -43,4 +43,20 @@ service AdminService @(path: '/api/admin') {
         registered: Integer;
         notRegistered: Integer;
     };
+    
+    // Get pending registrations summary and list
+    function getPendingRegistrations() returns {
+        summary: array of {
+            courseCode: String;
+            courseName: String;
+            pendingCount: Integer;
+        };
+        registrations: array of {
+            studentId: String;
+            studentName: String;
+            courseCode: String;
+            courseName: String;
+            submittedDate: String;
+        };
+    };
 }
