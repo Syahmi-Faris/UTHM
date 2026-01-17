@@ -67,17 +67,17 @@ module.exports = class AdminService extends cds.ApplicationService {
         this.on('getEnrollmentTrend', async (req) => {
             const yearsBack = req.data.yearsBack || 5;
 
-            // Full 10-year data (2017-2026) showing growth
+            // Full 10-year data (2017-2026) with realistic fluctuations
             const fullData = [
-                { year: 2017, studentCount: 856 },
-                { year: 2018, studentCount: 978 },
-                { year: 2019, studentCount: 1124 },
-                { year: 2020, studentCount: 1287 },
-                { year: 2021, studentCount: 1456 },
-                { year: 2022, studentCount: 1678 },
-                { year: 2023, studentCount: 1923 },
-                { year: 2024, studentCount: 2198 },
-                { year: 2025, studentCount: 2412 },
+                { year: 2017, studentCount: 2456 },
+                { year: 2018, studentCount: 2312 },
+                { year: 2019, studentCount: 2589 },
+                { year: 2020, studentCount: 2234 },
+                { year: 2021, studentCount: 2478 },
+                { year: 2022, studentCount: 2356 },
+                { year: 2023, studentCount: 2687 },
+                { year: 2024, studentCount: 2512 },
+                { year: 2025, studentCount: 2745 },
                 { year: 2026, studentCount: 2639 }
             ];
 
