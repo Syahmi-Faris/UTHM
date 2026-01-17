@@ -56,14 +56,12 @@
                         <tr>
                             <th>Course Code</th>
                             <th>Course Name</th>
-                            <th>Credit Hours</th>
-                            <th>Semester</th>
                         </tr>
                     </thead>
                     <tbody id="coursesTableBody">
                         <!-- Courses will be loaded here -->
                         <tr>
-                            <td colspan="4" class="loading-row">Loading courses...</td>
+                            <td colspan="2" class="loading-row">Loading courses...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -94,7 +92,7 @@
                 const tbody = document.getElementById('coursesTableBody');
 
                 if (courses.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="empty-row">No courses found</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="2" class="empty-row">No courses found</td></tr>';
                     return;
                 }
 
@@ -102,15 +100,13 @@
                     <tr>
                         <td><span class="course-code">${course.code}</span></td>
                         <td>${course.name}</td>
-                        <td>${course.creditHours}</td>
-                        <td><span class="semester-badge">${course.semester}</span></td>
                     </tr>
                 `).join('');
 
             } catch (error) {
                 console.error('Error loading courses:', error);
                 document.getElementById('coursesTableBody').innerHTML =
-                    '<tr><td colspan="4" class="error-row">Error loading courses</td></tr>';
+                    '<tr><td colspan="2" class="error-row">Error loading courses</td></tr>';
             }
         }
     </script>
