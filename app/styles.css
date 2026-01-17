@@ -454,6 +454,10 @@ body {
     width: 100%;
 }
 
+.chart-card.chart-full-width {
+    grid-column: 1 / -1;
+}
+
 /* ===== Clickable Cards ===== */
 .stat-card.clickable {
     cursor: pointer;

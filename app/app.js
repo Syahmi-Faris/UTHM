@@ -153,6 +153,11 @@ async function loadChartData() {
         const yearData = await yearResponse.json();
         renderStudentsPerYearChart(yearData.value || yearData);
 
+        // Load registration status data
+        const regResponse = await fetch(`${API_BASE}/getRegistrationStatus()`);
+        const regData = await regResponse.json();
+        renderRegistrationStatusChart(regData.value || regData);
+
     } catch (error) {
         console.error('Error loading chart data:', error);
     }
@@ -341,3 +346,77 @@ function renderStudentsPerYearChart(data) {
     });
 }
 
+// ===== Render Registration Status Chart (Stacked Bar Chart) =====
+function renderRegistrationStatusChart(data) {
+    const ctx = document.getElementById('registrationStatusChart');
+    if (!ctx) return;
+
+    const labels = data.map(item => item.courseCode);
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Registered',
+                    data: data.map(item => item.registered),
+                    backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    borderWidth: 2,
+                    borderRadius: 4
+                },
+                {
+                    label: 'Not Registered',
+                    data: data.map(item => item.notRegistered),
+                    backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                    borderColor: 'rgba(239, 68, 68, 1)',
+                    borderWidth: 2,
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20,
+                        color: '#475569'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    padding: 12,
+                    cornerRadius: 8
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stacked: false,
+                    ticks: {
+                        color: '#64748b'
+                    },
+                    grid: {
+                        color: 'rgba(203, 213, 225, 0.3)'
+                    }
+                },
+                x: {
+                    stacked: false,
+                    ticks: {
+                        color: '#64748b'
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+}

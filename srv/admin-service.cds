@@ -38,4 +38,12 @@ service AdminService @(path: '/api/admin') {
         facultyMechanical: Integer;
         facultyCivil: Integer;
     };
+    
+    // Chart data: Registration status per course
+    function getRegistrationStatus() returns array of {
+        courseCode: String;
+        courseName: String;
+        registered: Integer;
+        notRegistered: Integer;
+    };
 }

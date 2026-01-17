@@ -39,7 +39,7 @@ module.exports = class AdminService extends cds.ApplicationService {
             return {
                 totalStudents: 2639,
                 totalCourses: courses.length,
-                totalRegistrations: 2639,
+                totalRegistrations: 1567,
                 pendingRegistrations: 156
             };
         });
@@ -82,6 +82,18 @@ module.exports = class AdminService extends cds.ApplicationService {
             });
 
             return result;
+        });
+
+        // Get registration status per course (registered vs not registered)
+        // Total students: 2639, Registered: 1567, Not Registered: 1072
+        this.on('getRegistrationStatus', async (req) => {
+            return [
+                { courseCode: 'SECJH', courseName: 'Software Engineering', registered: 445, notRegistered: 304 },
+                { courseCode: 'SECRH', courseName: 'Network and Cybersecurity', registered: 328, notRegistered: 222 },
+                { courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', registered: 356, notRegistered: 244 },
+                { courseCode: 'SECBH', courseName: 'Bioinformatics', registered: 185, notRegistered: 135 },
+                { courseCode: 'SECPH', courseName: 'Data Engineering', registered: 253, notRegistered: 167 }
+            ];
         });
 
         await super.init();
