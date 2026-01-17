@@ -1,0 +1,7 @@
+ID;code;name;creditHours;semester
+b1c2d3e4-1111-2222-3333-444455556666;CSC1001;Introduction to Programming;3;Semester 1
+b1c2d3e4-1111-2222-3333-444455556667;CSC2002;Data Structures;3;Semester 2
+b1c2d3e4-1111-2222-3333-444455556668;CSC3003;Database Systems;3;Semester 3
+b1c2d3e4-1111-2222-3333-444455556669;CSC3004;Web Development;3;Semester 3
+b1c2d3e4-1111-2222-3333-444455556670;EEE1001;Circuit Analysis;4;Semester 1
+b1c2d3e4-1111-2222-3333-444455556671;MEE2001;Thermodynamics;3;Semester 2
