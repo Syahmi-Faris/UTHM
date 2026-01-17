@@ -22,4 +22,20 @@ service AdminService @(path: '/api/admin') {
         totalRegistrations: Integer;
         pendingRegistrations: Integer;
     };
+    
+    // Chart data: Students per course
+    function getStudentsPerCourse() returns array of {
+        courseName: String;
+        courseCode: String;
+        studentCount: Integer;
+    };
+    
+    // Chart data: Students per year by faculty
+    function getStudentsPerYear() returns array of {
+        year: Integer;
+        facultyComputing: Integer;
+        facultyElectrical: Integer;
+        facultyMechanical: Integer;
+        facultyCivil: Integer;
+    };
 }

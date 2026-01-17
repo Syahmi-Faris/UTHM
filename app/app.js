@@ -139,3 +139,205 @@ function animateNumber(elementId, targetValue) {
 
     requestAnimationFrame(update);
 }
+
+// ===== Load Chart Data =====
+async function loadChartData() {
+    try {
+        // Load students per course data
+        const courseResponse = await fetch(`${API_BASE}/getStudentsPerCourse()`);
+        const courseData = await courseResponse.json();
+        renderStudentsPerCourseChart(courseData.value || courseData);
+
+        // Load students per year data
+        const yearResponse = await fetch(`${API_BASE}/getStudentsPerYear()`);
+        const yearData = await yearResponse.json();
+        renderStudentsPerYearChart(yearData.value || yearData);
+
+    } catch (error) {
+        console.error('Error loading chart data:', error);
+    }
+}
+
+// ===== Render Students per Course Chart (Bar Chart) =====
+function renderStudentsPerCourseChart(data) {
+    const ctx = document.getElementById('studentsPerCourseChart');
+    if (!ctx) return;
+
+    const labels = data.map(item => item.courseCode);
+    const values = data.map(item => item.studentCount);
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Number of Students',
+                data: values,
+                backgroundColor: [
+                    'rgba(79, 70, 229, 0.8)',
+                    'rgba(14, 165, 233, 0.8)',
+                    'rgba(16, 185, 129, 0.8)',
+                    'rgba(245, 158, 11, 0.8)',
+                    'rgba(239, 68, 68, 0.8)',
+                    'rgba(139, 92, 246, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(79, 70, 229, 1)',
+                    'rgba(14, 165, 233, 1)',
+                    'rgba(16, 185, 129, 1)',
+                    'rgba(245, 158, 11, 1)',
+                    'rgba(239, 68, 68, 1)',
+                    'rgba(139, 92, 246, 1)'
+                ],
+                borderWidth: 2,
+                borderRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    padding: 12,
+                    cornerRadius: 8
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,
+                        color: '#64748b'
+                    },
+                    grid: {
+                        color: 'rgba(203, 213, 225, 0.3)'
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#64748b'
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+}
+
+// ===== Render Students per Year Chart (Line Chart) =====
+function renderStudentsPerYearChart(data) {
+    const ctx = document.getElementById('studentsPerYearChart');
+    if (!ctx) return;
+
+    const labels = data.map(item => item.year.toString());
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Computing',
+                    data: data.map(item => item.facultyComputing),
+                    borderColor: 'rgba(79, 70, 229, 1)',
+                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: 'rgba(79, 70, 229, 1)',
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                },
+                {
+                    label: 'Electrical',
+                    data: data.map(item => item.facultyElectrical),
+                    borderColor: 'rgba(14, 165, 233, 1)',
+                    backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: 'rgba(14, 165, 233, 1)',
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                },
+                {
+                    label: 'Mechanical',
+                    data: data.map(item => item.facultyMechanical),
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: 'rgba(16, 185, 129, 1)',
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                },
+                {
+                    label: 'Civil',
+                    data: data.map(item => item.facultyCivil),
+                    borderColor: 'rgba(245, 158, 11, 1)',
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: 'rgba(245, 158, 11, 1)',
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20,
+                        color: '#475569'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                    titleColor: '#fff',
+                    bodyColor: '#fff',
+                    padding: 12,
+                    cornerRadius: 8,
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,
+                        color: '#64748b'
+                    },
+                    grid: {
+                        color: 'rgba(203, 213, 225, 0.3)'
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: '#64748b'
+                    },
+                    grid: {
+                        color: 'rgba(203, 213, 225, 0.3)'
+                    }
+                }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            }
+        }
+    });
+}
+

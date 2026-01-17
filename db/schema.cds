@@ -2,12 +2,13 @@ namespace uthm.scr;
 
 // Students entity
 entity Students {
-    key ID           : UUID;
-        matricNumber : String(20) not null;
-        name         : String(100) not null;
-        email        : String(100);
-        faculty      : String(100);
-        createdAt    : Timestamp @cds.on.insert: $now;
+    key ID             : UUID;
+        matricNumber   : String(20) not null;
+        name           : String(100) not null;
+        email          : String(100);
+        faculty        : String(100);
+        enrollmentYear : Integer;
+        createdAt      : Timestamp @cds.on.insert: $now;
 }
 
 // Courses entity

@@ -102,6 +102,28 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Charts Section -->
+            <div class="charts-section">
+                <h2>Analytics</h2>
+                <div class="charts-grid">
+                    <!-- Students per Course Chart -->
+                    <div class="chart-card">
+                        <h3>Students per Course</h3>
+                        <div class="chart-container">
+                            <canvas id="studentsPerCourseChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Students per Year by Faculty Chart -->
+                    <div class="chart-card">
+                        <h3>Enrollment Trends by Faculty (2022-2026)</h3>
+                        <div class="chart-container">
+                            <canvas id="studentsPerYearChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <!-- Footer -->
@@ -110,12 +132,15 @@
         </footer>
     </div>
 
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="app.js"></script>
     <script>
         // Check authentication and load dashboard data
         document.addEventListener('DOMContentLoaded', function () {
             checkAuth();
             loadDashboardStats();
+            loadChartData();
         });
     </script>
 </body>

@@ -47,6 +47,47 @@ module.exports = class AdminService extends cds.ApplicationService {
             };
         });
 
+        // Get students per course
+        this.on('getStudentsPerCourse', async (req) => {
+            const { Courses, Registrations } = this.entities;
+
+            const courses = await SELECT.from(Courses);
+            const registrations = await SELECT.from(Registrations);
+
+            const result = courses.map(course => {
+                const count = registrations.filter(r => r.course_ID === course.ID).length;
+                return {
+                    courseName: course.name,
+                    courseCode: course.code,
+                    studentCount: count
+                };
+            });
+
+            return result;
+        });
+
+        // Get students per year by faculty (last 5 years)
+        this.on('getStudentsPerYear', async (req) => {
+            const { Students } = this.entities;
+
+            const students = await SELECT.from(Students);
+            const years = [2022, 2023, 2024, 2025, 2026];
+
+            const result = years.map(year => {
+                const yearStudents = students.filter(s => s.enrollmentYear === year);
+
+                return {
+                    year: year,
+                    facultyComputing: yearStudents.filter(s => s.faculty === 'Faculty of Computing').length,
+                    facultyElectrical: yearStudents.filter(s => s.faculty === 'Faculty of Electrical Engineering').length,
+                    facultyMechanical: yearStudents.filter(s => s.faculty === 'Faculty of Mechanical Engineering').length,
+                    facultyCivil: yearStudents.filter(s => s.faculty === 'Faculty of Civil Engineering').length
+                };
+            });
+
+            return result;
+        });
+
         await super.init();
     }
 };
