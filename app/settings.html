@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Student Course Registration</title>
+    <title>Settings - Admin Dashboard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -21,7 +21,7 @@
                         </path>
                     </svg>
                 </div>
-                <h1>Admin Dashboard</h1>
+                <h1>Settings</h1>
             </div>
             <div class="header-right">
                 <span class="admin-name" id="adminName">Welcome, Admin</span>
@@ -43,7 +43,7 @@
                 <nav class="sidebar-nav">
                     <div class="nav-section">
                         <span class="nav-label">Main</span>
-                        <a href="dashboard.html" class="nav-item active">
+                        <a href="dashboard.html" class="nav-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="3" y="3" width="7" height="7"></rect>
                                 <rect x="14" y="3" width="7" height="7"></rect>
@@ -88,7 +88,7 @@
                             </svg>
                             <span>User Management</span>
                         </a>
-                        <a href="settings.html" class="nav-item">
+                        <a href="settings.html" class="nav-item active">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="3"></circle>
                                 <path
@@ -103,107 +103,150 @@
 
             <!-- Main Content Area -->
             <main class="dashboard-main">
-                <div class="welcome-section">
-                    <h2>Overview Statistics</h2>
-                    <p>Student Course Registration System - Quick Summary</p>
+                <div class="page-header">
+                    <h2>System Settings</h2>
+                    <p>Configure registration system preferences</p>
                 </div>
 
-                <!-- Statistics Cards -->
-                <div class="stats-grid">
-                    <div class="stat-card students">
-                        <div class="stat-icon">
+                <!-- Settings Cards -->
+                <div class="settings-grid">
+                    <!-- Registration Period -->
+                    <div class="settings-card">
+                        <div class="settings-card-header">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
                             </svg>
+                            <h3>Registration Period</h3>
                         </div>
-                        <div class="stat-info">
-                            <h3 id="totalStudents">0</h3>
-                            <p>Total Students</p>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label>Current Semester</label>
+                                <select class="form-input">
+                                    <option>Semester 1 2025/2026</option>
+                                    <option selected>Semester 2 2025/2026</option>
+                                    <option>Short Semester 2025/2026</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Start Date</label>
+                                    <input type="date" class="form-input" value="2026-01-06">
+                                </div>
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <input type="date" class="form-input" value="2026-01-20">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="toggle-label">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-switch"></span>
+                                    Registration is Open
+                                </label>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="stat-card courses clickable" onclick="window.location.href='courses.html'">
-                        <div class="stat-icon">
+                    <!-- Course Settings -->
+                    <div class="settings-card">
+                        <div class="settings-card-header">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
                                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
                             </svg>
+                            <h3>Course Settings</h3>
                         </div>
-                        <div class="stat-info">
-                            <h3 id="totalCourses">0</h3>
-                            <p>Total Courses</p>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label>Maximum Credit Hours</label>
+                                <input type="number" class="form-input" value="21">
+                            </div>
+                            <div class="form-group">
+                                <label>Minimum Credit Hours</label>
+                                <input type="number" class="form-input" value="12">
+                            </div>
+                            <div class="form-group">
+                                <label class="toggle-label">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-switch"></span>
+                                    Require AA Approval
+                                </label>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="stat-card registrations">
-                        <div class="stat-icon">
+                    <!-- Notification Settings -->
+                    <div class="settings-card">
+                        <div class="settings-card-header">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <polyline points="10 9 9 9 8 9"></polyline>
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                             </svg>
+                            <h3>Notifications</h3>
                         </div>
-                        <div class="stat-info">
-                            <h3 id="totalRegistrations">0</h3>
-                            <p>Total Registrations</p>
+                        <div class="settings-card-body">
+                            <div class="form-group">
+                                <label class="toggle-label">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-switch"></span>
+                                    Email notifications for new registrations
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="toggle-label">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-switch"></span>
+                                    Email notifications for approvals
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="toggle-label">
+                                    <input type="checkbox">
+                                    <span class="toggle-switch"></span>
+                                    Daily summary report
+                                </label>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="stat-card pending clickable" onclick="window.location.href='pending.html'">
-                        <div class="stat-icon">
+                    <!-- System Info -->
+                    <div class="settings-card">
+                        <div class="settings-card-header">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
                             </svg>
+                            <h3>System Information</h3>
                         </div>
-                        <div class="stat-info">
-                            <h3 id="pendingRegistrations">0</h3>
-                            <p>Pending Registrations</p>
+                        <div class="settings-card-body">
+                            <div class="info-row">
+                                <span class="info-label">System Version</span>
+                                <span class="info-value">v1.0.0</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Database</span>
+                                <span class="info-value">SQLite (In-Memory)</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Last Updated</span>
+                                <span class="info-value">18 Jan 2026</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Faculty</span>
+                                <span class="info-value">Faculty of Computing</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Charts Section -->
-                <div class="charts-section">
-                    <h2>Analytics</h2>
-                    <div class="charts-grid">
-                        <!-- Students per Course Chart -->
-                        <div class="chart-card">
-                            <h3>Students per Course</h3>
-                            <div class="chart-container">
-                                <canvas id="studentsPerCourseChart"></canvas>
-                            </div>
-                        </div>
 
-                        <!-- Faculty of Computing Enrollment Trends Chart -->
-                        <div class="chart-card">
-                            <div class="chart-header">
-                                <h3>Faculty of Computing Enrollment Trends</h3>
-                                <div class="chart-toggle">
-                                    <button class="toggle-btn active" data-years="5"
-                                        onclick="toggleEnrollmentChart(5)">5
-                                        Years</button>
-                                    <button class="toggle-btn" data-years="10" onclick="toggleEnrollmentChart(10)">10
-                                        Years</button>
-                                </div>
-                            </div>
-                            <div class="chart-container">
-                                <canvas id="enrollmentTrendChart"></canvas>
-                            </div>
-                        </div>
-
-                        <!-- Registration Status per Course Chart -->
-                        <div class="chart-card chart-full-width">
-                            <h3>Registration Status by Course</h3>
-                            <div class="chart-container">
-                                <canvas id="registrationStatusChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Save Button -->
+                <div class="settings-actions">
+                    <button class="btn-secondary">Cancel</button>
+                    <button class="btn-primary" onclick="saveSettings()">Save Changes</button>
                 </div>
             </main>
         </div>
@@ -214,16 +257,15 @@
         </footer>
     </div>
 
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="app.js"></script>
     <script>
-        // Check authentication and load dashboard data
         document.addEventListener('DOMContentLoaded', function () {
             checkAuth();
-            loadDashboardStats();
-            loadChartData();
         });
+
+        function saveSettings() {
+            alert('Settings saved successfully!');
+        }
     </script>
 </body>
 

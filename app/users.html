@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Student Course Registration</title>
+    <title>User Management - Admin Dashboard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -21,7 +21,7 @@
                         </path>
                     </svg>
                 </div>
-                <h1>Admin Dashboard</h1>
+                <h1>User Management</h1>
             </div>
             <div class="header-right">
                 <span class="admin-name" id="adminName">Welcome, Admin</span>
@@ -43,7 +43,7 @@
                 <nav class="sidebar-nav">
                     <div class="nav-section">
                         <span class="nav-label">Main</span>
-                        <a href="dashboard.html" class="nav-item active">
+                        <a href="dashboard.html" class="nav-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect x="3" y="3" width="7" height="7"></rect>
                                 <rect x="14" y="3" width="7" height="7"></rect>
@@ -79,7 +79,7 @@
                             </svg>
                             <span>Activity Log</span>
                         </a>
-                        <a href="users.html" class="nav-item">
+                        <a href="users.html" class="nav-item active">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="9" cy="7" r="4"></circle>
@@ -103,107 +103,38 @@
 
             <!-- Main Content Area -->
             <main class="dashboard-main">
-                <div class="welcome-section">
-                    <h2>Overview Statistics</h2>
-                    <p>Student Course Registration System - Quick Summary</p>
+                <div class="page-header">
+                    <h2>User Management</h2>
+                    <p>Manage admin users and access permissions</p>
                 </div>
 
-                <!-- Statistics Cards -->
-                <div class="stats-grid">
-                    <div class="stat-card students">
-                        <div class="stat-icon">
+                <!-- Users Table -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Admin Users</h3>
+                        <button class="btn-primary" onclick="showAddUserModal()">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="totalStudents">0</h3>
-                            <p>Total Students</p>
-                        </div>
+                            Add User
+                        </button>
                     </div>
-
-                    <div class="stat-card courses clickable" onclick="window.location.href='courses.html'">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-                            </svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="totalCourses">0</h3>
-                            <p>Total Courses</p>
-                        </div>
-                    </div>
-
-                    <div class="stat-card registrations">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                <polyline points="14 2 14 8 20 8"></polyline>
-                                <line x1="16" y1="13" x2="8" y2="13"></line>
-                                <line x1="16" y1="17" x2="8" y2="17"></line>
-                                <polyline points="10 9 9 9 8 9"></polyline>
-                            </svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="totalRegistrations">0</h3>
-                            <p>Total Registrations</p>
-                        </div>
-                    </div>
-
-                    <div class="stat-card pending clickable" onclick="window.location.href='pending.html'">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="pendingRegistrations">0</h3>
-                            <p>Pending Registrations</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Charts Section -->
-                <div class="charts-section">
-                    <h2>Analytics</h2>
-                    <div class="charts-grid">
-                        <!-- Students per Course Chart -->
-                        <div class="chart-card">
-                            <h3>Students per Course</h3>
-                            <div class="chart-container">
-                                <canvas id="studentsPerCourseChart"></canvas>
-                            </div>
-                        </div>
-
-                        <!-- Faculty of Computing Enrollment Trends Chart -->
-                        <div class="chart-card">
-                            <div class="chart-header">
-                                <h3>Faculty of Computing Enrollment Trends</h3>
-                                <div class="chart-toggle">
-                                    <button class="toggle-btn active" data-years="5"
-                                        onclick="toggleEnrollmentChart(5)">5
-                                        Years</button>
-                                    <button class="toggle-btn" data-years="10" onclick="toggleEnrollmentChart(10)">10
-                                        Years</button>
-                                </div>
-                            </div>
-                            <div class="chart-container">
-                                <canvas id="enrollmentTrendChart"></canvas>
-                            </div>
-                        </div>
-
-                        <!-- Registration Status per Course Chart -->
-                        <div class="chart-card chart-full-width">
-                            <h3>Registration Status by Course</h3>
-                            <div class="chart-container">
-                                <canvas id="registrationStatusChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Last Login</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <!-- Users will be loaded here -->
+                        </tbody>
+                    </table>
                 </div>
             </main>
         </div>
@@ -214,16 +145,65 @@
         </footer>
     </div>
 
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="app.js"></script>
     <script>
-        // Check authentication and load dashboard data
         document.addEventListener('DOMContentLoaded', function () {
             checkAuth();
-            loadDashboardStats();
-            loadChartData();
+            loadUsers();
         });
+
+        function loadUsers() {
+            const users = [
+                { name: 'System Administrator', username: 'admin', role: 'Super Admin', status: 'Active', lastLogin: '2026-01-18 14:02:00' },
+                { name: 'Dr. Ahmad Razak', username: 'ahmad.razak', role: 'Admin', status: 'Active', lastLogin: '2026-01-17 10:30:00' },
+                { name: 'Pn. Siti Hajar', username: 'siti.hajar', role: 'Admin', status: 'Active', lastLogin: '2026-01-16 09:15:00' },
+                { name: 'En. Mohd Faizal', username: 'mohd.faizal', role: 'Viewer', status: 'Inactive', lastLogin: '2026-01-10 11:45:00' }
+            ];
+
+            const tbody = document.getElementById('usersTableBody');
+            tbody.innerHTML = users.map(user => `
+                <tr>
+                    <td>
+                        <div class="user-info">
+                            <div class="user-avatar">${user.name.charAt(0)}</div>
+                            <span>${user.name}</span>
+                        </div>
+                    </td>
+                    <td><span class="username-badge">${user.username}</span></td>
+                    <td><span class="role-badge ${user.role.toLowerCase().replace(' ', '-')}">${user.role}</span></td>
+                    <td><span class="status-badge ${user.status.toLowerCase()}">${user.status}</span></td>
+                    <td>${formatDateTime(user.lastLogin)}</td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="action-btn edit" title="Edit">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                            </button>
+                            <button class="action-btn delete" title="Delete">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function formatDateTime(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleString('en-MY', {
+                day: 'numeric', month: 'short', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+        }
+
+        function showAddUserModal() {
+            alert('Add User functionality coming soon!');
+        }
     </script>
 </body>
 
