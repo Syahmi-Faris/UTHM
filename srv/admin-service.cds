@@ -59,4 +59,13 @@ service AdminService @(path: '/api/admin') {
             submittedDate: String;
         };
     };
+    
+    // Get activity log
+    function getActivityLog() returns array of {
+        type: String;
+        user: String;
+        action: String;
+        time: String;
+        icon: String;
+    };
 }

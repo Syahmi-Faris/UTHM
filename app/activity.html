@@ -121,34 +121,37 @@
             loadActivityLog();
         });
 
-        function loadActivityLog() {
-            const activities = [
-                { type: 'login', user: 'System Administrator', action: 'Logged into the system', time: '2026-01-18 14:02:00', icon: 'login' },
-                { type: 'approve', user: 'System Administrator', action: 'Approved registration for Muhammad Syahmi Faris (SECJH)', time: '2026-01-18 13:45:00', icon: 'check' },
-                { type: 'reject', user: 'System Administrator', action: 'Rejected registration for Ahmad Ali (SECBH) - Prerequisite not met', time: '2026-01-18 13:30:00', icon: 'x' },
-                { type: 'view', user: 'System Administrator', action: 'Viewed pending registrations', time: '2026-01-18 13:25:00', icon: 'eye' },
-                { type: 'login', user: 'System Administrator', action: 'Logged into the system', time: '2026-01-18 09:00:00', icon: 'login' },
-                { type: 'settings', user: 'System Administrator', action: 'Updated system settings', time: '2026-01-17 16:30:00', icon: 'settings' },
-                { type: 'approve', user: 'System Administrator', action: 'Batch approved 15 registrations for SECRH', time: '2026-01-17 15:45:00', icon: 'check' },
-                { type: 'export', user: 'System Administrator', action: 'Exported registration report', time: '2026-01-17 14:20:00', icon: 'download' },
-                { type: 'login', user: 'System Administrator', action: 'Logged into the system', time: '2026-01-17 09:15:00', icon: 'login' },
-                { type: 'approve', user: 'System Administrator', action: 'Approved registration for Welson Woong (SECPH)', time: '2026-01-16 11:30:00', icon: 'check' }
-            ];
-
+        async function loadActivityLog() {
             const timeline = document.getElementById('activityTimeline');
-            timeline.innerHTML = activities.map(act => `
-                <div class="activity-item ${act.type}">
-                    <div class="activity-icon ${act.type}">
-                        ${getActivityIcon(act.icon)}
-                    </div>
-                    <div class="activity-content">
-                        <div class="activity-text">
-                            <strong>${act.user}</strong> ${act.action}
+            timeline.innerHTML = '<div class="loading-text">Loading activity log...</div>';
+
+            try {
+                const response = await fetch('/api/admin/getActivityLog()');
+                const result = await response.json();
+                const activities = result.value || result;
+
+                if (activities.length === 0) {
+                    timeline.innerHTML = '<div class="empty-text">No activity recorded yet</div>';
+                    return;
+                }
+
+                timeline.innerHTML = activities.map(act => `
+                    <div class="activity-item ${act.type}">
+                        <div class="activity-icon ${act.type}">
+                            ${getActivityIcon(act.icon)}
                         </div>
-                        <div class="activity-time">${formatDateTime(act.time)}</div>
+                        <div class="activity-content">
+                            <div class="activity-text">
+                                <strong>${act.user}</strong> ${act.action}
+                            </div>
+                            <div class="activity-time">${formatDateTime(act.time)}</div>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `).join('');
+            } catch (error) {
+                console.error('Error loading activity log:', error);
+                timeline.innerHTML = '<div class="error-text">Error loading activity log</div>';
+            }
         }
 
         function getActivityIcon(icon) {

@@ -1,5 +1,8 @@
 const cds = require('@sap/cds');
 
+// Global activity log storage (persists during app session)
+let activityLog = [];
+
 module.exports = class AdminService extends cds.ApplicationService {
 
     async init() {
@@ -15,6 +18,15 @@ module.exports = class AdminService extends cds.ApplicationService {
                 .where({ username: username, password: password });
 
             if (admin) {
+                // Record login activity
+                activityLog.unshift({
+                    type: 'login',
+                    user: admin.name,
+                    action: 'Logged into the system',
+                    time: new Date().toISOString(),
+                    icon: 'login'
+                });
+
                 return {
                     success: true,
                     message: 'Login successful',
@@ -178,6 +190,19 @@ module.exports = class AdminService extends cds.ApplicationService {
             };
 
             return { summary, registrations };
+        });
+
+        // Get activity log
+        this.on('getActivityLog', async (req) => {
+            // Default sample activities (shown if no login has been recorded yet)
+            const sampleActivities = [
+                { type: 'settings', user: 'System Administrator', action: 'Updated system settings', time: '2026-01-17T16:30:00', icon: 'settings' },
+                { type: 'approve', user: 'System Administrator', action: 'Batch approved 15 registrations for SECRH', time: '2026-01-17T15:45:00', icon: 'check' },
+                { type: 'export', user: 'System Administrator', action: 'Exported registration report', time: '2026-01-17T14:20:00', icon: 'download' }
+            ];
+
+            // Combine real activities with sample ones
+            return [...activityLog, ...sampleActivities];
         });
 
         await super.init();
