@@ -1292,3 +1292,90 @@ body {
     justify-content: flex-end;
     gap: 1rem;
 }
+
+/* ===== Dashboard Settings Summary ===== */
+.settings-summary {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.settings-summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.settings-summary-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--dark-color);
+}
+
+.edit-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.edit-link:hover {
+    color: var(--primary-dark);
+}
+
+.edit-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+.settings-summary-content {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.summary-label {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summary-value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.summary-value.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    display: inline-block;
+    width: fit-content;
+}
+
+.summary-value.status-badge.open {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success-color);
+}
+
+.summary-value.status-badge.closed {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--danger-color);
+}

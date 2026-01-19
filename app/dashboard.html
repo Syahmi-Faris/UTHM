@@ -158,6 +158,35 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Current Settings Summary -->
+                <div class="settings-summary">
+                    <div class="settings-summary-header">
+                        <h3>Current Registration Period</h3>
+                        <a href="settings.html" class="edit-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                            Edit Settings
+                        </a>
+                    </div>
+                    <div class="settings-summary-content">
+                        <div class="summary-item">
+                            <span class="summary-label">Semester</span>
+                            <span class="summary-value" id="currentSemester">Loading...</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Registration Period</span>
+                            <span class="summary-value" id="registrationPeriod">Loading...</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Status</span>
+                            <span class="summary-value status-badge" id="registrationStatus">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Charts Section -->
                 <div class="charts-section">
                     <h2>Analytics</h2>
@@ -214,7 +243,37 @@
             checkAuth();
             loadDashboardStats();
             loadChartData();
+            loadCurrentSettings();
         });
+
+        // Load current settings for display
+        async function loadCurrentSettings() {
+            try {
+                const response = await fetch('/api/admin/getSettings()');
+                const result = await response.json();
+                const settings = result.value || result;
+
+                // Display semester
+                document.getElementById('currentSemester').textContent = settings.semester;
+
+                // Format and display registration period
+                const startDate = new Date(settings.startDate).toLocaleDateString('en-MY', { day: 'numeric', month: 'short', year: 'numeric' });
+                const endDate = new Date(settings.endDate).toLocaleDateString('en-MY', { day: 'numeric', month: 'short', year: 'numeric' });
+                document.getElementById('registrationPeriod').textContent = `${startDate} - ${endDate}`;
+
+                // Display status
+                const statusEl = document.getElementById('registrationStatus');
+                if (settings.registrationOpen) {
+                    statusEl.textContent = 'Open';
+                    statusEl.classList.add('open');
+                } else {
+                    statusEl.textContent = 'Closed';
+                    statusEl.classList.add('closed');
+                }
+            } catch (error) {
+                console.error('Error loading settings:', error);
+            }
+        }
     </script>
 </body>
 
