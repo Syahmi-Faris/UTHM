@@ -115,25 +115,25 @@
                         <div class="settings-card-body">
                             <div class="form-group">
                                 <label>Current Semester</label>
-                                <select class="form-input">
-                                    <option>Semester 1 2025/2026</option>
-                                    <option selected>Semester 2 2025/2026</option>
-                                    <option>Short Semester 2025/2026</option>
+                                <select class="form-input" id="semester">
+                                    <option value="Semester 1 2025/2026">Semester 1 2025/2026</option>
+                                    <option value="Semester 2 2025/2026">Semester 2 2025/2026</option>
+                                    <option value="Short Semester 2025/2026">Short Semester 2025/2026</option>
                                 </select>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label>Start Date</label>
-                                    <input type="date" class="form-input" value="2026-01-06">
+                                    <input type="date" class="form-input" id="startDate">
                                 </div>
                                 <div class="form-group">
                                     <label>End Date</label>
-                                    <input type="date" class="form-input" value="2026-01-20">
+                                    <input type="date" class="form-input" id="endDate">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="toggle-label">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" id="registrationOpen">
                                     <span class="toggle-switch"></span>
                                     Registration is Open
                                 </label>
@@ -153,15 +153,15 @@
                         <div class="settings-card-body">
                             <div class="form-group">
                                 <label>Maximum Credit Hours</label>
-                                <input type="number" class="form-input" value="21">
+                                <input type="number" class="form-input" id="maxCreditHours">
                             </div>
                             <div class="form-group">
                                 <label>Minimum Credit Hours</label>
-                                <input type="number" class="form-input" value="12">
+                                <input type="number" class="form-input" id="minCreditHours">
                             </div>
                             <div class="form-group">
                                 <label class="toggle-label">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" id="requireAaApproval">
                                     <span class="toggle-switch"></span>
                                     Require AA Approval
                                 </label>
@@ -181,21 +181,21 @@
                         <div class="settings-card-body">
                             <div class="form-group">
                                 <label class="toggle-label">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" id="emailNewRegistrations">
                                     <span class="toggle-switch"></span>
                                     Email notifications for new registrations
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label class="toggle-label">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" id="emailApprovals">
                                     <span class="toggle-switch"></span>
                                     Email notifications for approvals
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label class="toggle-label">
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="dailySummary">
                                     <span class="toggle-switch"></span>
                                     Daily summary report
                                 </label>
@@ -221,10 +221,62 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             checkAuth();
+            loadSettings();
         });
 
-        function saveSettings() {
-            alert('Settings saved successfully!');
+        async function loadSettings() {
+            try {
+                const response = await fetch('/api/admin/getSettings()');
+                const result = await response.json();
+                const settings = result.value || result;
+
+                // Populate form fields
+                document.getElementById('semester').value = settings.semester;
+                document.getElementById('startDate').value = settings.startDate;
+                document.getElementById('endDate').value = settings.endDate;
+                document.getElementById('registrationOpen').checked = settings.registrationOpen;
+                document.getElementById('maxCreditHours').value = settings.maxCreditHours;
+                document.getElementById('minCreditHours').value = settings.minCreditHours;
+                document.getElementById('requireAaApproval').checked = settings.requireAaApproval;
+                document.getElementById('emailNewRegistrations').checked = settings.emailNewRegistrations;
+                document.getElementById('emailApprovals').checked = settings.emailApprovals;
+                document.getElementById('dailySummary').checked = settings.dailySummary;
+            } catch (error) {
+                console.error('Error loading settings:', error);
+            }
+        }
+
+        async function saveSettings() {
+            const settings = {
+                semester: document.getElementById('semester').value,
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                registrationOpen: document.getElementById('registrationOpen').checked,
+                maxCreditHours: parseInt(document.getElementById('maxCreditHours').value),
+                minCreditHours: parseInt(document.getElementById('minCreditHours').value),
+                requireAaApproval: document.getElementById('requireAaApproval').checked,
+                emailNewRegistrations: document.getElementById('emailNewRegistrations').checked,
+                emailApprovals: document.getElementById('emailApprovals').checked,
+                dailySummary: document.getElementById('dailySummary').checked
+            };
+
+            try {
+                const response = await fetch('/api/admin/saveSettings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settings)
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('Settings saved successfully!');
+                } else {
+                    alert('Error saving settings');
+                }
+            } catch (error) {
+                console.error('Error saving settings:', error);
+                alert('Error saving settings');
+            }
         }
     </script>
 </body>

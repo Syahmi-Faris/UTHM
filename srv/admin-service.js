@@ -3,6 +3,20 @@ const cds = require('@sap/cds');
 // Global activity log storage (persists during app session)
 let activityLog = [];
 
+// Global settings storage (persists during app session)
+let systemSettings = {
+    semester: 'Semester 2 2025/2026',
+    startDate: '2026-01-06',
+    endDate: '2026-01-20',
+    registrationOpen: true,
+    maxCreditHours: 21,
+    minCreditHours: 12,
+    requireAaApproval: true,
+    emailNewRegistrations: true,
+    emailApprovals: true,
+    dailySummary: false
+};
+
 module.exports = class AdminService extends cds.ApplicationService {
 
     async init() {
@@ -203,6 +217,41 @@ module.exports = class AdminService extends cds.ApplicationService {
 
             // Combine real activities with sample ones
             return [...activityLog, ...sampleActivities];
+        });
+
+        // Get settings
+        this.on('getSettings', async (req) => {
+            return systemSettings;
+        });
+
+        // Save settings
+        this.on('saveSettings', async (req) => {
+            const data = req.data;
+
+            // Update settings
+            systemSettings = {
+                semester: data.semester,
+                startDate: data.startDate,
+                endDate: data.endDate,
+                registrationOpen: data.registrationOpen,
+                maxCreditHours: data.maxCreditHours,
+                minCreditHours: data.minCreditHours,
+                requireAaApproval: data.requireAaApproval,
+                emailNewRegistrations: data.emailNewRegistrations,
+                emailApprovals: data.emailApprovals,
+                dailySummary: data.dailySummary
+            };
+
+            // Record activity
+            activityLog.unshift({
+                type: 'settings',
+                user: 'System Administrator',
+                action: 'Updated system settings',
+                time: new Date().toISOString(),
+                icon: 'settings'
+            });
+
+            return { success: true, message: 'Settings saved successfully' };
         });
 
         await super.init();

@@ -68,4 +68,32 @@ service AdminService @(path: '/api/admin') {
         time: String;
         icon: String;
     };
+    
+    // Get settings
+    function getSettings() returns {
+        semester: String;
+        startDate: String;
+        endDate: String;
+        registrationOpen: Boolean;
+        maxCreditHours: Integer;
+        minCreditHours: Integer;
+        requireAaApproval: Boolean;
+        emailNewRegistrations: Boolean;
+        emailApprovals: Boolean;
+        dailySummary: Boolean;
+    };
+    
+    // Save settings
+    action saveSettings(
+        semester: String,
+        startDate: String,
+        endDate: String,
+        registrationOpen: Boolean,
+        maxCreditHours: Integer,
+        minCreditHours: Integer,
+        requireAaApproval: Boolean,
+        emailNewRegistrations: Boolean,
+        emailApprovals: Boolean,
+        dailySummary: Boolean
+    ) returns { success: Boolean; message: String; };
 }
