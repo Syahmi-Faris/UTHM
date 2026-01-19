@@ -113,19 +113,69 @@ module.exports = class AdminService extends cds.ApplicationService {
                 { courseCode: 'SECPH', courseName: 'Data Engineering', pendingCount: 23 }
             ];
 
-            // Sample pending registrations (showing 10)
-            const registrations = [
-                { studentId: 'A23CS0156', studentName: 'Muhammad Syahmi Faris bin Rusli', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-15' },
-                { studentId: 'A23CS0234', studentName: 'Muhammad Naim bin Abdullah', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-15' },
-                { studentId: 'A23CS0189', studentName: 'Muhammad Afiq Danish bin Mohd Hazni', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-14' },
-                { studentId: 'A23CS0312', studentName: 'Welson Woong Lu Bin', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-14' },
-                { studentId: 'A23CS0098', studentName: 'Ang Chun Wei', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-14' },
-                { studentId: 'A23CS0445', studentName: 'Muhammad Adam bin Razali', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-13' },
-                { studentId: 'A23CS0267', studentName: 'Nuraisyah binti Zikre', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-13' },
-                { studentId: 'A23CS0178', studentName: 'Hoe Zhi Wan', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-13' },
-                { studentId: 'A23CS0523', studentName: 'Danish Hakim bin Aziz', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-12' },
-                { studentId: 'A23CS0334', studentName: 'Muhammad Amirun Irfan bin Samsul Shah', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-12' }
-            ];
+            // 10 students per course (showing 10 each)
+            const registrations = {
+                'SECJH': [
+                    { studentId: 'A23CS0156', studentName: 'Muhammad Syahmi Faris bin Rusli', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-15' },
+                    { studentId: 'A23CS0445', studentName: 'Muhammad Adam bin Razali', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-15' },
+                    { studentId: 'A23CS0523', studentName: 'Danish Hakim bin Aziz', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-14' },
+                    { studentId: 'A23CS0601', studentName: 'Ahmad Farhan bin Yusof', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-14' },
+                    { studentId: 'A23CS0612', studentName: 'Nurul Aina binti Kamal', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-13' },
+                    { studentId: 'A23CS0623', studentName: 'Mohd Haziq bin Ismail', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-13' },
+                    { studentId: 'A23CS0634', studentName: 'Siti Aminah binti Rahman', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-12' },
+                    { studentId: 'A23CS0645', studentName: 'Khairul Anwar bin Samad', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-12' },
+                    { studentId: 'A23CS0656', studentName: 'Nur Atiqah binti Hassan', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-11' },
+                    { studentId: 'A23CS0667', studentName: 'Muhammad Irfan bin Azman', courseCode: 'SECJH', courseName: 'Software Engineering', submittedDate: '2026-01-11' }
+                ],
+                'SECRH': [
+                    { studentId: 'A23CS0234', studentName: 'Muhammad Naim bin Abdullah', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-15' },
+                    { studentId: 'A23CS0267', studentName: 'Nuraisyah binti Zikre', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-15' },
+                    { studentId: 'A23CS0701', studentName: 'Amir Hamzah bin Kamal', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-14' },
+                    { studentId: 'A23CS0712', studentName: 'Sarina binti Hashim', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-14' },
+                    { studentId: 'A23CS0723', studentName: 'Mohd Faiz bin Osman', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-13' },
+                    { studentId: 'A23CS0734', studentName: 'Nur Hidayah binti Razak', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-13' },
+                    { studentId: 'A23CS0745', studentName: 'Ahmad Danial bin Zainal', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-12' },
+                    { studentId: 'A23CS0756', studentName: 'Fatimah binti Abdullah', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-12' },
+                    { studentId: 'A23CS0767', studentName: 'Haziq bin Jaafar', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-11' },
+                    { studentId: 'A23CS0778', studentName: 'Aina Sofea binti Noor', courseCode: 'SECRH', courseName: 'Network and Cybersecurity', submittedDate: '2026-01-11' }
+                ],
+                'SECVH': [
+                    { studentId: 'A23CS0189', studentName: 'Muhammad Afiq Danish bin Mohd Hazni', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-15' },
+                    { studentId: 'A23CS0178', studentName: 'Hoe Zhi Wan', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-15' },
+                    { studentId: 'A23CS0801', studentName: 'Tan Wei Ming', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-14' },
+                    { studentId: 'A23CS0812', studentName: 'Lim Siew Ling', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-14' },
+                    { studentId: 'A23CS0823', studentName: 'Wong Kai Xin', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-13' },
+                    { studentId: 'A23CS0834', studentName: 'Nurul Syafiqah binti Ali', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-13' },
+                    { studentId: 'A23CS0845', studentName: 'Lee Jun Wei', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-12' },
+                    { studentId: 'A23CS0856', studentName: 'Ong Mei Ying', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-12' },
+                    { studentId: 'A23CS0867', studentName: 'Ahmad Zulkifli bin Hassan', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-11' },
+                    { studentId: 'A23CS0878', studentName: 'Ng Wei Lin', courseCode: 'SECVH', courseName: 'Graphic and Computer Multimedia', submittedDate: '2026-01-11' }
+                ],
+                'SECBH': [
+                    { studentId: 'A23CS0312', studentName: 'Welson Woong Lu Bin', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-15' },
+                    { studentId: 'A23CS0901', studentName: 'Nurul Aisyah binti Razak', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-15' },
+                    { studentId: 'A23CS0912', studentName: 'Irfan bin Mohd Noor', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-14' },
+                    { studentId: 'A23CS0923', studentName: 'Chan Siew Mei', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-14' },
+                    { studentId: 'A23CS0934', studentName: 'Mohd Hafiz bin Yusof', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-13' },
+                    { studentId: 'A23CS0945', studentName: 'Nur Amira binti Kamal', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-13' },
+                    { studentId: 'A23CS0956', studentName: 'Tan Jia Wei', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-12' },
+                    { studentId: 'A23CS0967', studentName: 'Siti Nur Ain binti Samad', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-12' },
+                    { studentId: 'A23CS0978', studentName: 'Lim Chun Kiat', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-11' },
+                    { studentId: 'A23CS0989', studentName: 'Ahmad Firdaus bin Rahman', courseCode: 'SECBH', courseName: 'Bioinformatics', submittedDate: '2026-01-11' }
+                ],
+                'SECPH': [
+                    { studentId: 'A23CS0098', studentName: 'Ang Chun Wei', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-15' },
+                    { studentId: 'A23CS0334', studentName: 'Muhammad Amirun Irfan bin Samsul Shah', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-15' },
+                    { studentId: 'A23CS1001', studentName: 'Mohd Farhan bin Yusof', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-14' },
+                    { studentId: 'A23CS1012', studentName: 'Aina Sofea binti Zainal', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-14' },
+                    { studentId: 'A23CS1023', studentName: 'Haziq bin Jaafar', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-13' },
+                    { studentId: 'A23CS1034', studentName: 'Nurul Izzah binti Osman', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-13' },
+                    { studentId: 'A23CS1045', studentName: 'Wong Jia Hao', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-12' },
+                    { studentId: 'A23CS1056', studentName: 'Siti Zulaikha binti Ismail', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-12' },
+                    { studentId: 'A23CS1067', studentName: 'Lee Wei Jie', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-11' },
+                    { studentId: 'A23CS1078', studentName: 'Nur Fatin binti Hashim', courseCode: 'SECPH', courseName: 'Data Engineering', submittedDate: '2026-01-11' }
+                ]
+            };
 
             return { summary, registrations };
         });

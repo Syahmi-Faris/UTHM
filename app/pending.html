@@ -88,6 +88,9 @@
 
     <script src="app.js"></script>
     <script>
+        let allRegistrations = {};
+        let currentFilter = null;
+
         // Check authentication and load data
         document.addEventListener('DOMContentLoaded', function () {
             checkAuth();
@@ -101,11 +104,14 @@
                 const result = await response.json();
                 const data = result.value || result;
 
+                // Store registrations globally
+                allRegistrations = data.registrations;
+
                 // Render summary cards
                 renderSummaryCards(data.summary);
 
-                // Render table
-                renderPendingTable(data.registrations);
+                // Show message to select a course
+                showSelectCourseMessage();
 
             } catch (error) {
                 console.error('Error loading pending registrations:', error);
@@ -116,7 +122,14 @@
             }
         }
 
-        // Render summary cards
+        // Show message to select a course
+        function showSelectCourseMessage() {
+            const tbody = document.getElementById('pendingTableBody');
+            tbody.innerHTML = '<tr><td colspan="4" class="empty-row">Click on a course card above to view students</td></tr>';
+            document.querySelector('.table-title').textContent = 'Pending Registrations List';
+        }
+
+        // Render summary cards with click handler
         function renderSummaryCards(summary) {
             const container = document.getElementById('summaryCards');
 
@@ -126,7 +139,7 @@
             }
 
             container.innerHTML = summary.map(item => `
-                <div class="summary-card">
+                <div class="summary-card clickable" onclick="filterByCourse('${item.courseCode}', '${item.courseName}')">
                     <div class="summary-count">${item.pendingCount}</div>
                     <div class="summary-course">
                         <span class="course-code">${item.courseCode}</span>
@@ -134,6 +147,26 @@
                     </div>
                 </div>
             `).join('');
+        }
+
+        // Filter table by course code
+        function filterByCourse(courseCode, courseName) {
+            currentFilter = courseCode;
+
+            // Update active card styling
+            document.querySelectorAll('.summary-card').forEach(card => {
+                card.classList.remove('active');
+                if (card.querySelector('.course-code').textContent === courseCode) {
+                    card.classList.add('active');
+                }
+            });
+
+            // Update table title
+            document.querySelector('.table-title').textContent = `Pending Registrations - ${courseCode} (${courseName})`;
+
+            // Render filtered students
+            const students = allRegistrations[courseCode] || [];
+            renderPendingTable(students);
         }
 
         // Render pending table
